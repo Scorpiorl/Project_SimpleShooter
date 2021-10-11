@@ -10,19 +10,19 @@
    
 ### Player Movement
 
-![InputSetting](https://raw.githubusercontent.com/Scorpiorl/Project_SimpleShooter/master/README_PICTURE/InputSetting.png)
+![InputSetting](https://raw.githubusercontent.com/Scorpiorl/Project_SimpleShooter/master/README_PICTURE/InputSetting_AddGamePad.png)
 
 ```C++
 void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-    //Character Movement
 	PlayerInputComponent->BindAxis("MoveForward", this, &AShooterCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AShooterCharacter::MoveRight);
-    //Mouse Movement
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-    //Jump
+	PlayerInputComponent->BindAxis("LookRight", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUpRate", this, &AShooterCharacter::LookUpRate);
+	PlayerInputComponent->BindAxis("LookRightRate", this, &AShooterCharacter::LookRightRate);
+	
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 }
 
@@ -36,15 +36,15 @@ void AShooterCharacter::MoveRight(float AxisValue)
 	AddMovementInput(GetActorRightVector() * AxisValue);
 }
 
-/*void AShooterCharacter::LookUp(float AxisValue)
+void AShooterCharacter::LookUpRate(float AxisValue)
 {
-	AddControllerPitchInput(AxisValue);
+	AddControllerPitchInput(AxisValue * RotateRate * GetWorld()->GetDeltaSeconds());
 }
 
-void AShooterCharacter::Turn(float AxisValue)
+void AShooterCharacter::LookRightRate(float AxisValue)
 {
-	AddControllerYawInput(AxisValue);
-}*/
+	AddControllerYawInput(AxisValue * RotateRate * GetWorld()->GetDeltaSeconds());
+}
 ```
 
 
