@@ -10,6 +10,7 @@
    
 ### Player Movement
 
+![InputSetting](https://raw.githubusercontent.com/Scorpiorl/Project_SimpleShooter/master/README_PICTURE/InputSetting.png)
 
 ```C++
 void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
