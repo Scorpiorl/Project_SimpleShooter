@@ -46,6 +46,8 @@ void AShooterCharacter::LookRightRate(float AxisValue)
 	AddControllerYawInput(AxisValue * RotateRate * GetWorld()->GetDeltaSeconds());
 }
 ```
+## Animation
+**Mesh-->Skeleton<--Animations**
 
 
 
