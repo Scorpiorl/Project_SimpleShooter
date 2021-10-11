@@ -29,8 +29,9 @@ public:
 private:
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
-	/*void LookUp(float AxisValue);
-	void Turn(float AxisValue);
-	*/
+	void LookUpRate(float AxisValue);
+	void LookRightRate(float AxisValue);
+	UPROPERTY(EditAnywhere)
+	float RotateRate = 10.0f;
 	
 };
