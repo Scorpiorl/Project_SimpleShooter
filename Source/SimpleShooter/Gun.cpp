@@ -2,8 +2,9 @@
 
 
 #include "Gun.h"
-#include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "DrawDebugHelpers.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -19,10 +20,30 @@ AGun::AGun()
 	// ProjectileSpwanPiont->SetupAttachment(GunMesh);
 }
 
+void AGun::PullTrigger()
+{
+	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, GunMesh, TEXT("MuzzleFlashSocket"));
+	Shooter = Cast<APawn>(GetOwner());
+	if (Shooter == nullptr) return;
+	ShooterController = Shooter->GetController();
+	if (ShooterController == nullptr) return;
+	ShooterController->GetPlayerViewPoint(ViewPointLocation, ViewPointRotation);
+	ViewPointEnd = ViewPointLocation + ViewPointRotation.Vector() * MaxRange;
+	
+	FHitResult Hit;
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, ViewPointLocation, ViewPointEnd, ECollisionChannel::ECC_GameTraceChannel1);
+	if (bSuccess)
+	{
+		DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
+	}
+	// DrawDebugCamera(GetWorld(), ViewPointLocation, ViewPointRotation, 90, 2, FColor::Red, true);
+}
+
 // Called when the game starts or when spawned
 void AGun::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 }
 
@@ -30,6 +51,6 @@ void AGun::BeginPlay()
 void AGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 

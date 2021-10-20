@@ -15,6 +15,8 @@ public:
 	// Sets default values for this actor's properties
 	AGun();
 
+	void PullTrigger();
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -30,7 +32,14 @@ private:
 	USkeletalMeshComponent* GunMesh;
 	// UPROPERTY(VisibleAnywhere)
 	// USceneComponent* ProjectileSpwanPiont;
-
 	
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* MuzzleFlash;
 
+	FVector ViewPointLocation;
+	FRotator ViewPointRotation;
+	FVector ViewPointEnd;
+	APawn* Shooter;
+	AController* ShooterController;
+	float MaxRange = 1000.0f;
 };

@@ -17,7 +17,6 @@ void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
-
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("weapon_rSocket"));
 	//用来标识武器的主人
@@ -42,8 +41,15 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis("LookRight", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AShooterCharacter::LookUpRate);
 	PlayerInputComponent->BindAxis("LookRightRate", this, &AShooterCharacter::LookRightRate);
-	
+	//Jump
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	//Shooting
+	PlayerInputComponent->BindAction("PullTrigger", IE_Pressed, this, &AShooterCharacter::Fire);
+}
+
+void AShooterCharacter::Fire()
+{
+	Gun->PullTrigger();
 }
 
 void AShooterCharacter::MoveForward(float AxisValue)
