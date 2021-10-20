@@ -48,7 +48,54 @@ void AShooterCharacter::LookRightRate(float AxisValue)
 ```
 ## Animation
 **Mesh-->Skeleton<--Animations**
+- **Bland Space**
 
+- **Animation Blueprint**
 
+## Shooting
+1. 创建一个Actor作为Gun
+2. 设置Gun根节点以及Mesh
+```C++
+//Gun.h
+private:
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* SceneComponent;
+	UPROPERTY(VisibleAnywhere)
+	USkeletalMeshComponent* GunMesh;
+```
+```C++
+//Gun.cpp
+AGun::AGun()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+	SceneComponent = CreateDefaultSubobject<USceneComponent>("Root Component");
+	SetRootComponent(SceneComponent);
+	GunMesh = CreateDefaultSubobject<USkeletalMeshComponent>("Gun Mesh");
+	GunMesh->SetupAttachment(SceneComponent);
+	// ProjectileSpwanPiont = CreateDefaultSubobject<USceneComponent>("Projectile Spwan Piont");
+	// ProjectileSpwanPiont->SetupAttachment(GunMesh);
+}
+```
 
+3. 装备新Gun
+```C++
+//ShooterCharacter.cpp
+void AShooterCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
+	//将Character原有Gun隐藏
+	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
+	//将新Gun附着到Character上
+	Gun->AttachToComponent()
+}
+```
+	FAttachmentTransformRules:
+	- KeepRelativeTransform（保持两个物体之间的相对位置不变）
+	- KeepWorldTransform（保持两个物体在世界的位置不变）
+	- SnapToTargetNotIncludingScale（保持物体的缩放对齐到目标上）
+	- SnapToTargetIncludingScale（随目标的缩放）
+参考:https://www.cnblogs.com/CodeWithMe/p/12930819.html
 
+	
