@@ -49,8 +49,11 @@ void AShooterCharacter::LookRightRate(float AxisValue)
 ## Animation
 **Mesh-->Skeleton<--Animations**
 - **Bland Space**
-
+	1. Locomotion![BS_Locomotion](https://raw.githubusercontent.com/Scorpiorl/UrealProject_SimpleShooter/master/README_PICTURE/BS_Locomotion.png)
+	2. Axis Setting![BS_AxisSetting](https://raw.githubusercontent.com/Scorpiorl/UrealProject_SimpleShooter/master/README_PICTURE/BS_AxisSetting.png)
 - **Animation Blueprint**
+	1. Animation Graph![ABP_AnimGraph](https://raw.githubusercontent.com/Scorpiorl/UrealProject_SimpleShooter/master/README_PICTURE/ABP_AnimGraph.png)
+	2. Event Graph![ABP_EventGraph](https://raw.githubusercontent.com/Scorpiorl/UrealProject_SimpleShooter/master/README_PICTURE/ABP_EventGraph.png)
 
 ## Shooting
 1. 创建一个Actor作为Gun
