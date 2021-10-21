@@ -9,13 +9,15 @@ AShooterCharacter::AShooterCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 }
 
 // Called when the game starts or when spawned
 void AShooterCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	Health = MaxHealth;
+	
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("weapon_rSocket"));
@@ -28,7 +30,6 @@ void AShooterCharacter::BeginPlay()
 void AShooterCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -45,6 +46,16 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	//Shooting
 	PlayerInputComponent->BindAction("PullTrigger", IE_Pressed, this, &AShooterCharacter::Fire);
+}
+
+float AShooterCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	DamageToApply = FMath::Min(Health, DamageToApply);
+	Health -= DamageToApply;
+	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
+	return DamageToApply;
 }
 
 void AShooterCharacter::Fire()

@@ -35,11 +35,17 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* MuzzleFlash;
-
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* ImpactEffect;
+	
 	FVector ViewPointLocation;
 	FRotator ViewPointRotation;
 	FVector ViewPointEnd;
 	APawn* Shooter;
 	AController* ShooterController;
 	float MaxRange = 1000.0f;
+
+	UPROPERTY(EditAnywhere)
+	float DamageAmuont = 10.0f;
+	
 };

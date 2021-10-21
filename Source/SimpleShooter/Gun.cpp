@@ -34,7 +34,22 @@ void AGun::PullTrigger()
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, ViewPointLocation, ViewPointEnd, ECollisionChannel::ECC_GameTraceChannel1);
 	if (bSuccess)
 	{
-		DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
+		FVector ShooterDirection = -ViewPointRotation.Vector();
+		// DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
+		//在击中位置生成特效
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShooterDirection.Rotation());
+		// DrawDebugLine(GetWorld(), ViewPointLocation, Hit.Location, FColor::Red, true);
+		
+		//仅对击中敌人造成伤害
+		// APawn* HitActor = Cast<APawn>(Hit.GetActor());
+		
+		//对世界Actor都能造成伤害
+		AActor* HitActor = Hit.GetActor();
+		if (HitActor != nullptr)
+		{
+			FPointDamageEvent DamageEvent(DamageAmuont, Hit, ShooterDirection, nullptr);
+			HitActor->TakeDamage(DamageAmuont, DamageEvent, ShooterController, this);
+		}
 	}
 	// DrawDebugCamera(GetWorld(), ViewPointLocation, ViewPointRotation, 90, 2, FColor::Red, true);
 }
