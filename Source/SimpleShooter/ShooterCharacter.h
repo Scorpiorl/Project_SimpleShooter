@@ -20,7 +20,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
+	UFUNCTION(BlueprintPure)
+	bool IsDead() const;
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -39,7 +41,7 @@ private:
 	float RotateRate = 10.0f;
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100.0f;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float Health;
 	
 
