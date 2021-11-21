@@ -200,3 +200,4 @@ void AShooterCharacter::LookRightRate(float AxisValue)
 	AnimGraph![ABP_BlendPosesByBool](https://raw.githubusercontent.com/Scorpiorl/UrealProject_SimpleShooter/master/README_PICTURE/ABP_BlendPosesByBool.png)
 	Event Graph![ABP_AnimGraph_AddIsDead](https://raw.githubusercontent.com/Scorpiorl/UrealProject_SimpleShooter/master/README_PICTURE/ABP_AnimGraph_AddIsDead.png)
 
+## Enemy AI
